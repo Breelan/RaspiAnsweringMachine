@@ -6,22 +6,22 @@ to a different folder when it's done. Set it to run as often as you like in your
 Author: Breelan Lubers
 """
 
-# connect to dropbox account using auth_token
+# use dropbox_uploader
 import time
 import subprocess
-import dropbox
-from dropbox.client import DropboxOAuth2Flow, DropboxClient
+#import dropbox
+#from dropbox.client import DropboxOAuth2Flow, DropboxClient
 
-saveFile = 'token.txt'
+#saveFile = 'token.txt'
 
-# TODO use oath instead of asking for auth key each time?
+
 # TODO make this cron job-able!
 def main():
 
-    # ask for the user to enter their token
-    auth_token = raw_input("Please enter your Dropbox auth token: ")
+    ## ask for the user to enter their token
+    #auth_token = raw_input("Please enter your Dropbox auth token: ")
 
-    client = DropboxClient(auth_token)
+    #client = DropboxClient(auth_token)
 
 # see if there are any new .mp3 files
 # currently the program sleeps for 5 minutes between checks - change it
@@ -30,7 +30,8 @@ def main():
 
         time.sleep(5 * 60)
 
-        possible_file = client.metadata('/new')
+        #possible_file = client.metadata('/new')
+	possible_file_command = "/home/pi/RaspiAnsweringMachine/Dropbox-Uploader/dropbox_uploader.sh download 
 
         # check for errors
         contents = possible_file.get('contents')

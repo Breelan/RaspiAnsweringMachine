@@ -1,14 +1,22 @@
 import os
 import subprocess
 import time
+import io
 #also requires use of Dropbox-Uploader, which must be downloaded
 
 def main():
     possible_file_command = "/home/pi/RaspiAnsweringMachine/Dropbox-Uploader/dropbox_uploader.sh list /new"
 
-    #try to save the list to a var
+    #save the list to a var
     #mp3_list = subprocess.call(possible_file_command, shell=True)
     #print(mp3_list)
+
+    #TODO parse through the list, download each file one by one, play it, then move to the next one
+
+
+
+    #################################################################################################################
+    #####start of old way, with problem of file playing getting interrupted by moving the file to a new location#####
 
     #download everything into a local folder
     download_command = "/home/pi/RaspiAnsweringMachine/Dropbox-Uploader/dropbox_uploader.sh download /new"
@@ -35,7 +43,7 @@ def main():
             subprocess.call(move_command, shell=True)
             #delete the file from the /new folder
 
-    
+    #the following is required to use omxplayer to play files though speakers
     #music_command = "omxplayer -o local "
 
 if __name__ == '__main__':

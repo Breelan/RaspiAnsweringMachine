@@ -5,19 +5,38 @@ import io
 #also requires use of Dropbox-Uploader, which must be downloaded
 
 def main():
-    possible_file_command = "/home/pi/RaspiAnsweringMachine/Dropbox-Uploader/dropbox_uploader.sh list /new"
+    possible_file_command = "/home/pi/RaspiAnsweringMachine/Dropbox-Uploader/dropbox_uploader.sh list /new > out.txt"
 
-    #save the list to a var
-    #mp3_list = subprocess.call(possible_file_command, shell=True)
-    #print(mp3_list)
+    #save the list to file called out.txt
+    subprocess.call(possible_file_command, shell=True)
 
-    #TODO parse through the list, download each file one by one, play it, then move to the next one
+    #TODO open the file, parse through the list, download each file one by one, play it, then move to the next one
+    with open('out.txt', 'r') as file_object:
 
+        #skip to the files
+        line = file_object.readline()
+        line = file_object.readline()
+
+        while line:
+
+            filename = line[13:].strip()
+            print(filename)
+            download_command = "/home/pi/RaspiAnsweringMachine/Dropbox-Uploader/dropbox_uploader.sh download /new/" + filename + ""
+            subprocess.call(download_command, shell=True)
+
+            music_command = "mpg123 /home/pi/RaspiAnsweringMachine/" + filename + ""
+            subprocess.call(music_command, shell=True)
+
+            #TODO move file to save folder in dropbox and delete locally
+            
+            line = file_object.readline()
+
+        #TODO don't forget to close file_object
 
 
     #################################################################################################################
     #####start of old way, with problem of file playing getting interrupted by moving the file to a new location#####
-
+    '''
     #download everything into a local folder
     download_command = "/home/pi/RaspiAnsweringMachine/Dropbox-Uploader/dropbox_uploader.sh download /new"
     subprocess.call(download_command, shell=True)
@@ -45,6 +64,6 @@ def main():
 
     #the following is required to use omxplayer to play files though speakers
     #music_command = "omxplayer -o local "
-
+    '''
 if __name__ == '__main__':
     main()

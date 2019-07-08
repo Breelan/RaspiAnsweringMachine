@@ -44,11 +44,15 @@ def main():
             download_command = "/home/pi/RaspiAnsweringMachine/Dropbox-Uploader/dropbox_uploader.sh download /new/" + filename
             subprocess.call(download_command, shell=True)
 
-            music_command = "mpg123 /home/pi/RaspiAnsweringMachine/" + filename
+            #move the file to RaspiAnsweringMachine folder if it's not there already
+            move_command = "sudo mv " + filename + " /home/pi/RaspiAnsweringMachine/"
+            subprocess.call(move_command, shell=True)
+
+            music_command = "/usr/bin/mpg123 /home/pi/RaspiAnsweringMachine/" + filename
             subprocess.call(music_command, shell=True)
 
             #move file to save folder in dropbox and delete locally - can we do it with sudo? what about without?
-            move_command = "sudo mv " + filename + " ./old_files"
+            move_command = "sudo mv /home/pi/RaspiAnsweringMachine/" + filename + " /home/pi/RaspiAnsweringMachine/old_files"
             subprocess.call(move_command, shell=True)
 
             delete_command = "/home/pi/RaspiAnsweringMachine/Dropbox-Uploader/dropbox_uploader.sh delete /new/" + filename

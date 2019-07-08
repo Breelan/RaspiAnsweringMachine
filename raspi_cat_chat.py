@@ -1,8 +1,19 @@
+
+"""
+This program is meant to run as a cron job that will scrape your dropbox folder for 
+any mp3 files you've placed in there, play them from the command line, and move them 
+to a different folder when it's done. Set it to run as often as you like in your crontab.
+
+This works on raspberry pi and requires the use of Dropbox-Uploader, which must be
+downloaded and placed at the same level as this file.
+
+Author: Breelan Lubers
+"""
+
 import os
 import subprocess
 import time
 import io
-#also requires use of Dropbox-Uploader, which must be downloaded
 
 def main():
 
